@@ -22,3 +22,6 @@ In the source directory the java classes have been organised based on the functi
 1. Request is received in the rest endpoint, the request is validated with annotations in the model class. 
 2. If a valid request is received, it will be forwarded to the service class. 
 3. The service class calls the repository class to perform DB action, based on DB response it will either give you a status-200 response or "NoRecordFound" exception.
+
+![image](https://user-images.githubusercontent.com/15722492/154835757-2536f53a-5fd5-4de0-81d4-4926d527614e.png)
+
