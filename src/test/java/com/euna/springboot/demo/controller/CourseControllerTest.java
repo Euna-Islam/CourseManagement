@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import com.euna.springboot.demo.model.Course;
@@ -72,6 +73,13 @@ public class CourseControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void test_createCourse() throws Exception {
+        String uri = "/createCourse";
 
+        mockMvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content("{\"courseid\": 4,\"coursename\": \"Test\",\"author\": \"Pat1\"}"))
+                .andExpect(status().isOk());
+    }
 
 }
