@@ -31,13 +31,13 @@ public class CourseControllerTest {
     MockMvc mockMvc;
 
     @Test
-    public void test_index() throws Exception {
+    public void it_should_return_index() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void test_returnAllCourses() throws Exception {
+    public void it_should_return_all_courses() throws Exception {
         List<Course> allCourses = new ArrayList<>();
 
         Course course = new Course();
@@ -54,7 +54,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void test_returnCourseById() throws Exception {
+    public void it_should_return_one_course_by_id() throws Exception {
         Course course = new Course();
         course.setCourseid(new BigInteger("1"));
         course.setCoursename("TestCourse");
@@ -68,18 +68,26 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void test_deleteCourseById() throws Exception {
+    public void it_should_return_void() throws Exception {
            mockMvc.perform(MockMvcRequestBuilders.delete("/deleteCourse/1"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void test_createCourse() throws Exception {
+    public void it_should_return_created_course() throws Exception {
         String uri = "/createCourse";
 
+        Course course = new Course();
+        course.setCourseid(new BigInteger("1"));
+        course.setCoursename("TestCourse");
+        course.setAuthor("Angel");
+
+        Mockito.when(courseService.createCourse(course)).thenReturn(course);
+
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content("{\"courseid\": 4,\"coursename\": \"Test\",\"author\": \"Pat1\"}"))
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content("{\"courseid\": 1,\"coursename\": \"TestCourse\",\"author\": \"Angel\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.coursename", Matchers.is("TestCourse")));
     }
 
 }
